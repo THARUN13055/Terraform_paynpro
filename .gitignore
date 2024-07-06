@@ -1,0 +1,51 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Exclude override files as they are usually used to override resources locally
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Exclude CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Ignore any files with secrets (update this with any patterns specific to your project)
+secret.yaml
+secret.json
+
+# Ignore Terraform plan output files
+*.tfplan
+
+# Ignore lock file
+.terraform.lock.hcl
+
+# Ignore backup files created by Terraform
+*.backup
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore any other files that contain sensitive data
+# Add patterns here for additional files that might contain sensitive data
