@@ -202,7 +202,7 @@ resource "aws_security_group" "appserver_sg" {
   depends_on = [ 
     aws_vpc.paynpro,
     aws_security_group.webserver_sg,
-    aws_security_group.dbserver_sg
+
    ]
 }
 
@@ -222,8 +222,7 @@ resource "aws_security_group" "dbserver_sg" {
     Name = "DBServer"
   }
   depends_on = [
-    aws_vpc.paynpro,
-    aws_security_group.appserver_sg
+    aws_vpc.paynpro
   ]
 }
 
