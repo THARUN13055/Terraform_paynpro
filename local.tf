@@ -12,4 +12,5 @@ locals {
     "10.0.5.0/24" = "us-east-1a", #private subnet db
     "10.0.6.0/24" = "us-east-1b", #private subnet db
   }
+  
 }

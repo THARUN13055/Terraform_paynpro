@@ -18,10 +18,7 @@ resource "aws_route_table" "public" {
     Name = "public-route-table"
   }
   tags_all = var.additional_tags
-  # depends_on = [
-  #   aws_vpc.paynpro,
-  #   aws_internet_gateway.IGW_Public_route
-  # ]
+  depends_on = [ module.subnets ]
 }
 
 resource "aws_route_table" "private" {
@@ -36,10 +33,6 @@ resource "aws_route_table" "private" {
     Name = "private-route-table"
   }
   tags_all = var.additional_tags
-  # depends_on = [
-  #   aws_vpc.paynpro,
-  #   aws_nat_gateway.nat_gateway
-  # ]
 }
 
 #Associated the Route Table
@@ -49,20 +42,11 @@ resource "aws_route_table_association" "public_route_table_association" {
   for_each       = { for k, v in module.subnets.subnet_map : k => v if k == keys(var.subnet_map)[0] || k == keys(var.subnet_map)[1] }
   subnet_id      = each.value.id
   route_table_id = aws_route_table.public.id
-  # depends_on = [
-  #   aws_vpc.paynpro,
-  #   aws_subnet.subnets,
-  #   aws_route_table.public
-  # ]
+
 }
 
 resource "aws_route_table_association" "private_route_table_association" {
   for_each       = { for k, v in module.subnets.subnet_map : k => v if index(keys(var.subnet_map), k) >= 2 }
   subnet_id      = each.value.id
   route_table_id = aws_route_table.private.id
-  # depends_on = [
-  #   aws_vpc.paynpro,
-  #   aws_subnet.subnets,
-  #   aws_route_table.private
-  # ]
 }
