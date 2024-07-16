@@ -1,11 +1,9 @@
 resource "aws_internet_gateway" "IGW_Public_route" {
   vpc_id = var.vpc_id
   tags = {
-    Name = var.IGW_name
+    Name = var.IGW_Public_route_name
   }
-  depends_on = [
-    aws_vpc.paynpro
-  ]
+  tags_all = var.additional_tags
 }
 
 #Internet Gateway Attachment

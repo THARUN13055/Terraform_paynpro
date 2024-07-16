@@ -1,4 +1,12 @@
-# output "security_group_ids" {
-#   value       = module.vpc.security_group_ids
-#   description = "Security group IDs from the VPC module"
-# }
+output "vpc_ids" {
+  value = module.vpc.vpc_ids
+}
+
+output "subnet_ids" {
+  value = module.subnets.subnet_ids
+}
+
+output "subnet_ids_index" {
+  value = module.subnets.subnet_map
+}
+

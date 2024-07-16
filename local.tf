@@ -1,8 +1,8 @@
 locals {
   tags = {
     "Environment" = "test",
-    "Project" = "paynpro"
-    "CreatedBy" = "Tharun"
+    "Project"     = "paynpro"
+    "CreatedBy"   = "Tharun"
   }
   subnet_map = {
     "10.0.1.0/24" = "us-east-1a", #public subnet webserver

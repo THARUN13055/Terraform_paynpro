@@ -1,64 +1,42 @@
 module "vpc" {
-  source         = "./module/vpc"
-  vpc_cidr_block = "10.0.0.0/16"
-  vpc_name       = "paynpro_vpc"
-  subnet_map = {
-    "10.0.1.0/24" = "us-east-1a", #public subnet webserver
-    "10.0.2.0/24" = "us-east-1b", #public subnet webserver
-    "10.0.3.0/24" = "us-east-1a", #private subnet appserver
-    "10.0.4.0/24" = "us-east-1b", #private subnet appserver
-    "10.0.5.0/24" = "us-east-1a", #private subnet db
-    "10.0.6.0/24" = "us-east-1b", #private subnet db
-  } 
-  # security_group = {
-  #   "Loadbalancer" = "This is a security group for loadbalancer",
-  #   "Webserver" = "This is a security group for webserver",
-  #   "AppServer" = "This is a security group for appserver",
-  #   "DBServer"  = "This is a security group for dbserver",
-  # }
-  # security_group_rules = {
-  #   Loadbalancer = [
-  #     {
-  #       from_port   = 443
-  #       to_port     = 443
-  #       protocol    = "tcp"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #     }
-  #   ],
-  #   Webserver = [
-  #     {
-  #       from_port            = 443
-  #       to_port              = 443
-  #       protocol             = "tcp"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #       #source_security_group_id = aws_security_group.security_group["Loadbalancer"].id
-  #     }
-  #   ],
-  #   AppServer = [
-  #     {
-  #       from_port            = 5000
-  #       to_port              = 5000
-  #       protocol             = "tcp"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #       #source_security_group_id = aws_security_group.security_group["Webserver"].id
-  #     },
-  #     {
-  #       from_port            = 8000
-  #       to_port              = 8000
-  #       protocol             = "tcp"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #       #source_security_group_id = aws_security_group.security_group["Webserver"].id
-  #     }
-  #   ],
-  #   DBServer = [
-  #     {
-  #       from_port            = 3306
-  #       to_port              = 3306
-  #       protocol             = "tcp"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #       #source_security_group_id = aws_security_group.security_group["AppServer"].id
-  #     }
-  #   ]
-  # }
+  source          = "./modules/Networks/VPC"
+  vpc_name        = "paynpro"
+  vpc_cidr_block  = "10.0.0.0/16"
+  additional_tags = local.tags
 }
 
+module "subnets" {
+  source          = "./modules/Networks/Subnet"
+  subnet_map      = local.subnet_map
+  vpc_id          = module.vpc.vpc_ids
+  additional_tags = local.tags
+}
+
+module "internet_gateway" {
+  source          = "./modules/Networks/IGW"
+  vpc_id          = module.vpc.vpc_ids
+  IGW_Public_route_name = "paynpro-igw"
+  additional_tags = local.tags
+}
+
+module "elastic_ip" {
+  source          = "./modules/Networks/E_IP"
+  domain          = "vpc"
+  additional_tags = local.tags
+}
+
+module "nat_gateway" {
+  source          = "./modules/Networks/NAT"
+  elastic_ip_nat  = module.elastic_ip.eip_ids
+  subnet_id       = module.subnets.subnet_ids["10.0.2.0/24"]
+  additional_tags = local.tags
+}
+
+module "route_table" {
+  source              = "./modules/Networks/Route_Table"
+  vpc_id              = module.vpc.vpc_ids
+  internet_gateway_id = module.internet_gateway.internet_gateway_ids
+  nat_gateway_id      = module.nat_gateway.privateNat_ids
+  subnet_map          = local.subnet_map
+  additional_tags = local.tags
+}
