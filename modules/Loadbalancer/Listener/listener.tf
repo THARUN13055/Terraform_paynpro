@@ -13,6 +13,6 @@ resource "aws_lb_listener" "Webserver_listener" {
   tags = {
     Name = "Webserver-listener"
   }
-  
+
   tags_all = var.additional_tags
 }
