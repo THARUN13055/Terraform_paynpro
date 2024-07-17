@@ -1,7 +1,7 @@
 module "subnets" {
-  source = "../Subnet"
-  subnet_map = var.subnet_map
-  vpc_id = var.vpc_id
+  source          = "../Subnet"
+  subnet_map      = var.subnet_map
+  vpc_id          = var.vpc_id
   additional_tags = var.additional_tags
 }
 
@@ -14,11 +14,11 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = var.internet_gateway_id
   }
-  tags ={
+  tags = {
     Name = "public-route-table"
   }
-  tags_all = var.additional_tags
-  depends_on = [ module.subnets ]
+  tags_all   = var.additional_tags
+  depends_on = [module.subnets]
 }
 
 resource "aws_route_table" "private" {

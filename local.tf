@@ -12,5 +12,5 @@ locals {
     "10.0.5.0/24" = "us-east-1a", #private subnet db
     "10.0.6.0/24" = "us-east-1b", #private subnet db
   }
-  
+  certificate_arn = "arn:aws:acm:ap-south-1:058264519347:certificate/6cfeb000-2d2f-4038-9055-38815bd2f92f"
 }

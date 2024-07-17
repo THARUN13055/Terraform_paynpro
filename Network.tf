@@ -3,7 +3,7 @@ module "vpc" {
   vpc_name        = "paynpro"
   vpc_cidr_block  = "10.0.0.0/16"
   additional_tags = local.tags
-  
+
 }
 
 module "subnets" {
@@ -15,10 +15,10 @@ module "subnets" {
 }
 
 module "internet_gateway" {
-  source          = "./modules/Networks/IGW"
-  vpc_id          = module.vpc.vpc_ids
+  source                = "./modules/Networks/IGW"
+  vpc_id                = module.vpc.vpc_ids
   IGW_Public_route_name = "paynpro-igw"
-  additional_tags = local.tags
+  additional_tags       = local.tags
   # depends_on = [ module.vpc ]
 }
 
@@ -43,14 +43,14 @@ module "route_table" {
   internet_gateway_id = module.internet_gateway.internet_gateway_ids
   nat_gateway_id      = module.nat_gateway.privateNat_ids
   subnet_map          = local.subnet_map
-  additional_tags = local.tags
+  additional_tags     = local.tags
   # depends_on = [ module.vpc, module.subnets, module.internet_gateway, module.nat_gateway ]
 }
 
 module "security_group_Loadbalancer" {
   source = "./modules/Networks/Security_Group"
 
-  vpc_id = module.vpc.vpc_ids
+  vpc_id          = module.vpc.vpc_ids
   additional_tags = local.tags
   security_groups = {
     loadbalancer_sg = {
@@ -59,10 +59,10 @@ module "security_group_Loadbalancer" {
 
       ingress = [
         {
-          from_port   = 443
-          to_port     = 443
-          protocol    = "tcp"
-          cidr_blocks = ["0.0.0.0/0"]
+          from_port       = 443
+          to_port         = 443
+          protocol        = "tcp"
+          cidr_blocks     = ["0.0.0.0/0"]
           security_groups = null
         }
       ]
@@ -74,22 +74,22 @@ module "security_group_Loadbalancer" {
   }
 }
 module "security_group_Webserver" {
-  source = "./modules/Networks/Security_Group"
-  vpc_id = module.vpc.vpc_ids
+  source          = "./modules/Networks/Security_Group"
+  vpc_id          = module.vpc.vpc_ids
   additional_tags = local.tags
   security_groups = {
     webserver_sg = {
       name        = "Webserver"
       description = "Security group for Webserver"
-      
+
 
       ingress = [
         {
-          from_port            = 443
-          to_port              = 443
-          protocol             = "tcp"
-          cidr_blocks = null
-          security_groups      = module.security_group_Loadbalancer.security_groups_ingress_ids
+          from_port       = 443
+          to_port         = 443
+          protocol        = "tcp"
+          cidr_blocks     = null
+          security_groups = module.security_group_Loadbalancer.security_groups_ingress_ids
         }
       ]
 
@@ -101,29 +101,29 @@ module "security_group_Webserver" {
 }
 
 module "security_group_Appserver" {
-     source = "./modules/Networks/Security_Group"
-     vpc_id = module.vpc.vpc_ids
-     additional_tags = local.tags
-     security_groups = {
-     appserver_sg = {
+  source          = "./modules/Networks/Security_Group"
+  vpc_id          = module.vpc.vpc_ids
+  additional_tags = local.tags
+  security_groups = {
+    appserver_sg = {
       name        = "AppServer"
       description = "Security group for AppServer"
-    
+
 
       ingress = [
         {
-          from_port            = 5000
-          to_port              = 5000
-          protocol             = "tcp"
-          cidr_blocks = null
-          security_groups      = module.security_group_Webserver.security_groups_ingress_ids
+          from_port       = 5000
+          to_port         = 5000
+          protocol        = "tcp"
+          cidr_blocks     = null
+          security_groups = module.security_group_Webserver.security_groups_ingress_ids
         },
         {
-          from_port            = 443
-          to_port              = 443
-          protocol             = "tcp"
-          cidr_blocks = null  
-          security_groups      = module.security_group_Webserver.security_groups_ingress_ids
+          from_port       = 443
+          to_port         = 443
+          protocol        = "tcp"
+          cidr_blocks     = null
+          security_groups = module.security_group_Webserver.security_groups_ingress_ids
         }
       ]
 
@@ -134,22 +134,22 @@ module "security_group_Appserver" {
   }
 }
 module "security_group_DBServer" {
-    source = "./modules/Networks/Security_Group"
-    vpc_id = module.vpc.vpc_ids
-     additional_tags = local.tags
-     security_groups = {
+  source          = "./modules/Networks/Security_Group"
+  vpc_id          = module.vpc.vpc_ids
+  additional_tags = local.tags
+  security_groups = {
     dbserver_sg = {
       name        = "DBServer"
       description = "Security group for DBServer"
-      
+
 
       ingress = [
         {
-          from_port            = 3306
-          to_port              = 3306
-          protocol             = "tcp"
-          cidr_blocks = null  
-          security_groups      = module.security_group_Appserver.security_groups_ingress_ids
+          from_port       = 3306
+          to_port         = 3306
+          protocol        = "tcp"
+          cidr_blocks     = null
+          security_groups = module.security_group_Appserver.security_groups_ingress_ids
         }
       ]
 
