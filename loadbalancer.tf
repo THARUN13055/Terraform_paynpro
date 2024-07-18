@@ -28,19 +28,19 @@ module "Listener" {
 }
 
 module "Launch_configuration" {
-  source                      = "./modules/Auto_Scaling_Groups/Launch_configuration"
-  launch_configuration_name        = "paynpro-launch-configguration"
-  key_pair_name               = "Mumbai_paynpro"
-  instance_type               = "t2.micro"
-  image_id           = "ami-0ad21ae1d0696ad58"
-  monitoring_enabled = true
-  security_groups             = module.security_group_Webserver.security_groups_ingress_ids
-  ebs_device_name            = "/dev/xvda"
-  volume_type                = "gp3"
-  volume_size                = 8
-  ebs_encrypted              = true
-  delete_on_termination      = true
-  iops                       = 1000
+  source                    = "./modules/Auto_Scaling_Groups/Launch_configuration"
+  launch_configuration_name = "paynpro-launch-configguration"
+  key_pair_name             = "Mumbai_paynpro"
+  instance_type             = "t2.micro"
+  image_id                  = "ami-0ad21ae1d0696ad58"
+  monitoring_enabled        = true
+  security_groups           = module.security_group_Webserver.security_groups_ingress_ids
+  ebs_device_name           = "/dev/xvda"
+  volume_type               = "gp3"
+  volume_size               = 8
+  ebs_encrypted             = true
+  delete_on_termination     = true
+  iops                      = 1000
 }
 
 module "Auto_Scaling_Groups" {
