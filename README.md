@@ -14,20 +14,9 @@ This repository contains Terraform code to provision and manage resources on AWS
 - RDS Instances
 - S3 Buckets
 
-![Architecture Diagram](architecture.jpeg)
+<img src="architecture.jpeg" alt="Architecture Diagram" width="300"/>
 
 The architecture diagram above illustrates the infrastructure setup provisioned by this Terraform code. It includes a VPC with public and private subnets, an Internet Gateway, a NAT Gateway, Route Tables, Security Groups, EC2 instances, Auto Scaling Groups, Load Balancers, RDS instances, and S3 buckets.
-
-## Folder Structure
-
-modules/
-└── Networks
-    ├── E_IP
-    ├── IGW
-    ├── NAT
-    ├── Route_Table
-    ├── Subnet
-    └── VPC
 
 ## Prerequisites
 
