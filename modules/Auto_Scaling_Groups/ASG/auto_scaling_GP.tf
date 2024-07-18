@@ -1,4 +1,4 @@
-resource "aws_autoscaling_group" "bar" {
+resource "aws_autoscaling_group" "ASG" {
   availability_zones = var.availability_zones
   desired_capacity   = var.desired_capacity
   max_size           = var.max_size
