@@ -1,4 +1,4 @@
-variable "launch_configuration_name" {
+variable "launch_template_name" {
   type = string
 }
 
@@ -14,8 +14,6 @@ variable "instance_type" {
 variable "security_groups" {
   type = list(string)
 }
-
-#ebs
 
 variable "ebs_device_name" {
   type = string
@@ -41,12 +39,34 @@ variable "iops" {
   type = number
 }
 
-
-
 variable "image_id" {
   type = string
 }
 
+variable "instance_initiated_shutdown_behavior" {
+  type = string
+}
+
+variable "market_type" {
+  type = string
+}
+
+variable "associate_public_ip_address" {
+  type = bool
+}
+
+variable "availability_zone" {
+  type = string
+}
+
+variable "additional_tags" {
+  type = map(string)
+}
+
 variable "monitoring_enabled" {
   type = bool
+}
+
+variable "iam_instance_profile" {
+  type = string
 }
