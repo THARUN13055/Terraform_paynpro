@@ -65,9 +65,9 @@ resource "aws_launch_template" "web_launch_template" {
 
   tag_specifications {
     resource_type = "instance"
-    tags = merge({
-      Name = "paynpro-webserver"
-    },additional_tags)
+    tags = {
+      Name = "paynpro-webserver",
+    }
   }
 
   lifecycle {

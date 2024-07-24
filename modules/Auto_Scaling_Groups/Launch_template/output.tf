@@ -1,3 +1,3 @@
-output "launch_configuration_ids" {
-  value = aws_launch_configuration.web_launch_configuration.id
+output "launch_template_ids" {
+  value = aws_launch_template.web_launch_template.id
 }

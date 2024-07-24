@@ -59,10 +59,6 @@ variable "availability_zone" {
   type = string
 }
 
-variable "additional_tags" {
-  type = map(string)
-}
-
 variable "monitoring_enabled" {
   type = bool
 }

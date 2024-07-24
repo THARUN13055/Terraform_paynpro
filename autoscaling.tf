@@ -13,10 +13,9 @@ module "Launch_template" {
   delete_on_termination     = true
   iops                      = 2000
   instance_initiated_shutdown_behavior = "stop"
-  market_type               = "on-demand"
+  market_type               = "spot"
   associate_public_ip_address = false
   availability_zone = "us-east-1a"
-  additional_tags = local.tags
   iam_instance_profile = "paynpro-code-deployer"
 }
 
@@ -26,6 +25,6 @@ module "Auto_Scaling_Groups" {
   desired_capacity   = 2
   min_size           = 1
   max_size           = 5
-  launch_template_id = module.Launch_configuration.launch_configuration_ids
+  launch_template_id = module.Launch_template.launch_template_ids
   availability_zones = ["us-east-1a", "us-east-1b"]
 }
