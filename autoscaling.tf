@@ -15,7 +15,7 @@ module "Launch_template" {
   instance_initiated_shutdown_behavior = "stop"
   market_type               = "spot"
   associate_public_ip_address = false
-  availability_zone = "us-east-1a"
+  availability_zone = "ap-south-1a"
   iam_instance_profile = "paynpro-code-deployer"
 }
 
@@ -26,5 +26,8 @@ module "Auto_Scaling_Groups" {
   min_size           = 1
   max_size           = 5
   launch_template_id = module.Launch_template.launch_template_ids
-  availability_zones = ["us-east-1a", "us-east-1b"]
+  vpc_zone_identifier = [
+    module.subnets.subnet_ids["10.0.3.0/24"],
+    module.subnets.subnet_ids["10.0.4.0/24"]
+  ]
 }
