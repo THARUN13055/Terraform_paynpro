@@ -1,8 +1,7 @@
-# Set default behavior to automatically normalize line endings.
+# Default behavior for line endings
 * text=auto
 
-# Explicitly declare text files you want to always be normalized and converted
-# to native line endings on checkout.
+# Explicitly declare text files for normalization
 *.tf text
 *.json text
 *.yaml text
@@ -10,70 +9,34 @@
 *.md text
 *.sh text
 *.env text
-*.js text
-*.ts text
-*.jsx text
-*.tsx text
-*.css text
-*.html text
-*.xml text
-*.go text
-*.mod text
-*.sum text
-*.txt text
-*.csv text
-*.toml text
-*.ini text
-*.cfg text
-*.properties text
-*.py text
-*.rb text
-*.java text
-*.c text
-*.h text
-*.cpp text
-*.hpp text
-*.cs text
-*.php text
-*.sql text
-*.scala text
-*.swift text
-*.kt text
-*.dart text
-*.rs text
 
-# Declare binary files that should be preserved as-is.
+# Declare binary files
 *.jpg binary
+*.jpeg binary
 *.png binary
 *.gif binary
 *.ico binary
-*.zip binary
-*.rar binary
-*.tar.gz binary
-*.exe binary
-*.pdf binary
-*.dll binary
-*.so binary
-*.dylib binary
-*.a binary
-*.o binary
-*.obj binary
-*.class binary
-*.jar binary
-*.war binary
-*.ear binary
-*.xpi binary
-*.pyc binary
-*.pyo binary
-*.whl binary
-*.egg binary
-*.par binary
-*.deb binary
-*.rpm binary
-*.snap binary
-*.appimage binary
-*.apk binary
-*.ipa binary
-*.dmg binary
-*.iso binary
-*.img binary
+
+# Mark specific files and directories for special handling
+LICENSE linguist-documentation=false
+README.md linguist-documentation=true
+
+# Treat Terraform files as HCL (HashiCorp Configuration Language)
+*.tf linguist-language=HCL
+
+# Sample vendored and generated files (update these as needed for your project)
+# Adjust paths according to your specific project structure
+
+# Mark the architecture image as a binary file
+architecture.jpeg binary
+
+# Mark auto-generated files
+modules/**/output.tf linguist-generated
+modules/**/variable.tf linguist-generated
+
+# Vendored directories (examples, adjust as needed)
+modules/Auto_Scaling_Groups/ASG/** linguist-vendored
+modules/Database/Mysql_database/** linguist-vendored
+
+# Detectable files
+terraform_script/install_code_deploy.sh linguist-detectable=true
