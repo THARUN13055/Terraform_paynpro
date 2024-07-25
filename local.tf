@@ -13,4 +13,5 @@ locals {
     "10.0.6.0/24" = "ap-south-1b", #private subnet db
   }
   certificate_arn = "arn:aws:acm:ap-south-1:058264519347:certificate/6cfeb000-2d2f-4038-9055-38815bd2f92f"
+  # kms_key_arn = "arn:aws:kms:ap-south-1:058264519347:key/23636509-45e9-436e-8b1f-548876364863"
 }
