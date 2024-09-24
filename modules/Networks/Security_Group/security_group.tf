@@ -12,6 +12,7 @@ resource "aws_security_group" "security_groups_ingress" {
     content {
       from_port = ingress.value.from_port
       to_port   = ingress.value.to_port
+      description = ingress.value.description
       protocol  = ingress.value.protocol
 
       cidr_blocks     = can(ingress.value.cidr_blocks) ? ingress.value.cidr_blocks : null

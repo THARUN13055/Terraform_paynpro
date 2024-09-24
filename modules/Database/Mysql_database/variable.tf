@@ -1,29 +1,29 @@
 variable "engine" {
-  type        = string
+  type = string
 }
 
 variable "engine_version" {
-  type        = string
+  type = string
 }
 
 variable "storage_type" {
-   type        = string
+  type = string
 }
 
 variable "preferred_instance_classes" {
-  type        = list(string)
+  type = list(string)
 }
 
 variable "db_subnet_group_name" {
-  type        = string
+  type = string
 }
 
 variable "identifier" {
-  type        = string
+  type = string
 }
 
 variable "username" {
-  type        = string
+  type = string
 }
 
 # variable "kms_key_id" {

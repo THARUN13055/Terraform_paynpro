@@ -13,6 +13,7 @@ variable "security_groups" {
     ingress = list(object({
       from_port       = number
       to_port         = number
+      description     = string
       protocol        = string
       cidr_blocks     = list(string)
       security_groups = list(string)
