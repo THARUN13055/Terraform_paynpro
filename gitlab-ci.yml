@@ -1,0 +1,9 @@
+image: docker:latest
+
+stages:
+  - build_json
+  - push_dj_kics
+
+include:
+  - local: gitlab/ci/build.yml
+  - local: gitlab/ci/push_dj.yml
