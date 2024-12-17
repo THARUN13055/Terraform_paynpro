@@ -46,6 +46,6 @@ secret.json
 # Ignore system files
 .DS_Store
 Thumbs.db
-
+.terraform
 # Ignore any other files that contain sensitive data
 # Add patterns here for additional files that might contain sensitive data
