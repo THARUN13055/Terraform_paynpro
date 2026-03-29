@@ -1,0 +1,24 @@
+kics-scan:
+  image:
+    name: checkmarx/kics:latest
+    entrypoint: [""]
+  stage: build_json
+  when: manual
+  script:
+    - mkdir -p kics_scan
+    - kics scan --no-progress -p ${PWD} -o kics_scan --report-formats json --output-name kics-results || EXIT_CODE=$?
+    - echo "KICS scan completed with exit code $EXIT_CODE"
+    - |
+      if [ "$EXIT_CODE" -ne 0 ]; then
+        echo "KICS found issues. Review the kics-results.json file for details."
+        # Optionally fail the job if you want to stop the pipeline:
+        # exit 1
+      fi
+  cache:
+    key: kics-results-cache
+    paths:
+      - kics_scan/kics-results.json
+  allow_failure: true
+  
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "test"'

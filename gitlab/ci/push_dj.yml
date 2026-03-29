@@ -1,0 +1,21 @@
+push_to_dj:
+  stage: push_dj_kics
+  when: manual
+  image: golang:latest
+  variables:
+    VERSION: "$CI_PIPELINE_IID"
+    GITLAB_BUILD_ID: "$CI_PIPELINE_ID"
+    GITLAB_BRANCH_TAG: "$CI_COMMIT_REF_NAME"
+    GITLAB_COMMIT_HASH: "$CI_COMMIT_SHA"
+    CI_PROJECT_NAME: "$CI_PROJECT_NAME"
+  dependencies:
+    - kics-scan
+  cache:
+    key: kics_file
+    paths:
+      - kics_scan/kics-results.json
+    policy: pull
+  script:
+    - go mod init tharun13055
+    - go mod tidy
+    - go run defectdojo.go
